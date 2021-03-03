@@ -31,7 +31,7 @@ COPY fake-disk.sh /usr/libexec/gluster/fake-disk.sh
 
 RUN dnf -y update && \
     sed -i "s/LANG/\#LANG/g" /etc/locale.conf && \
-    dnf -y install systemd-udev glusterfs-server dbus-python nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos xfsprogs && \
+    dnf -y install systemd-udev glusterfs-server dbus-python-devel nfs-utils attr iputils iproute glusterfs-geo-replication openssh-server openssh-clients cronie tar rsync sos xfsprogs procps openssh* && \
     dnf clean all && \
     sed -i '/Port 22/c\Port 2222' /etc/ssh/sshd_config && \
     sed -i 's/Requires\=rpcbind\.service//g' /usr/lib/systemd/system/glusterd.service && \
@@ -44,8 +44,8 @@ RUN dnf -y update && \
     cp -r /etc/glusterfs/* /etc/glusterfs_bkp && \
     cp -r /var/lib/glusterd/* /var/lib/glusterd_bkp && \
     cp -r /var/log/glusterfs/* /var/log/glusterfs_bkp && \
-    mv /gluster-setup.sh /usr/sbin/gluster-setup.sh && \
     mv /gluster-brickmultiplex.service /etc/systemd/system/gluster-brickmultiplex.service && \
+    mv /gluster-setup.sh /usr/sbin/gluster-setup.sh && \
     mv /gluster-brickmultiplex.sh /usr/sbin/gluster-brickmultiplex.sh && \
     mv /gluster-setup.service /etc/systemd/system/gluster-setup.service && \
     chmod 755 /usr/libexec/gluster/fake-disk.sh && \
@@ -72,6 +72,6 @@ RUN true \
     && systemctl mask rpcbind.socket \
     && true
 
-EXPOSE 2222 111 245 443 24006 24007 2049 8080 6010 6011 6012 38465 38466 38468 38469 49152 49153 49154 49156 49157 49158 49159 49160 49161 49162
+EXPOSE 22 2222 111 245 443 24006 24007 2049 8080 6010 6011 6012 38465 38466 38468 38469 49152 49153 49154 49156 49157 49158 49159 49160 49161 49162
 
 CMD ["/usr/sbin/init"]

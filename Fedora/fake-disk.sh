@@ -16,11 +16,11 @@
 # well, see PassEnvironment in gluster-fake-disk.service and systemd.exec(5).
 #
 # Set the USE_FAKE_DISK environment variable in the container deployment
-#USE_FAKE_DISK=1
+USE_FAKE_DISK=1
 # You should also have a bind-mount for /srv in case data is expected to stay
 # available after restarting the glusterfs-server container.
 FAKE_DISK_FILE=${FAKE_DISK_FILE:-/srv/fake-disk.img}
-FAKE_DISK_SIZE=${FAKE_DISK_SIZE:-10G}
+FAKE_DISK_SIZE=${FAKE_DISK_SIZE:-8G}
 FAKE_DISK_DEV=${FAKE_DISK_DEV:-/dev/fake}
 
 # Create the FAKE_DISK_FILE with fallocate, but only do so if it does not exist
